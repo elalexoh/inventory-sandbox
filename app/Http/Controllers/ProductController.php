@@ -12,9 +12,32 @@ class ProductController extends Controller
         $products = Product::all();
         return $products->toJson(JSON_PRETTY_PRINT);
     }
-    public function detail()
+
+    public function detail($id)
     {
-        return 'Product';
+        try {
+            $product = Product::findOrFail($id);
+            $data = array(
+                'name'              => $product->name,
+                'description'       => $product->description,
+                'price'             => $product->price,
+            );
+            $response = response()->json(array(
+                'status'    => 'success',
+                'code'      =>  200,
+                'message'   => 'Producto encontrado.',
+                'data'      => $data
+            ), 200);
+        }
+        // catch(Exception $e) catch any exception
+        catch (\Throwable $th) {
+            $data = response()->json(array(
+                'status'    =>  'error',
+                'code'      =>   404,
+                'message'   =>  'No se encontro el producto.',
+            ), 404);
+        }
+        return $response;
     }
 
     public function create()
