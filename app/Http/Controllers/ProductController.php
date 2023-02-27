@@ -4,14 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
-        return $products->toJson(JSON_PRETTY_PRINT);
+        try {
+            $products = Product::all();
+            $response = response()->json(array(
+                'status'    =>  'error',
+                'code'      =>   404,
+                'message'   =>  'Producto actualizado.',
+                'data'      =>  $products
+            ), 404);
+        } catch (\Throwable $th) {
+            $response = response()->json(array(
+                'status'    =>  'error',
+                'code'      =>   404,
+                'message'   =>  'Producto actualizado.',
+                'data'      =>  []
+            ), 404);
+        }
+
+        return $response;
     }
 
     public function detail($id)
@@ -96,13 +113,56 @@ class ProductController extends Controller
         return $data;
     }
 
-    public function edit()
+    public function edit(Request $request, $id)
     {
-        return 'update Products';
+        try {
+            $product = Product::findOrFail($id);
+            $product->name = is_null($request->input('name')) ? $product->name : $request->input('name');
+            $product->description = is_null($request->input('description')) ? $product->description : $request->input('description');
+            $product->price = is_null($request->input('price')) ? $product->price : $request->input('price');
+            $product->update();
+
+            $response = response()->json(array(
+                'status'    =>  'success',
+                'code'      =>   200,
+                'message'   =>  'Producto actualizado.',
+                'data'      =>  $product
+            ), 200);
+        }
+        // catch(Exception $e) catch any exception
+        catch (\Throwable $th) {
+            $response = response()->json(array(
+                'status'    =>  'error',
+                'code'      =>   404,
+                'message'   =>  'No se encontro el producto.',
+            ), 404);
+        }
+        return $response;
     }
 
-    public function remove()
+    public function remove($id)
     {
-        return 'remove Products';
+        try {
+            DB::beginTransaction();
+            $product = Product::findOrFail($id);
+
+            $product->delete();
+
+            DB::commit();
+            $response = response()->json(array(
+                'status'        => 'success',
+                'code'          =>   200,
+                'message'       => 'Producto Eliminado satisfactoriamente.',
+            ), 200);
+        }
+        // catch(Exception $e) catch any exception
+        catch (\Throwable $th) {
+            $response = response()->json(array(
+                'status'    =>  'error',
+                'code'      =>   404,
+                'message'   =>  'No se encontro el producto.',
+            ), 404);
+        }
+        return $response;
     }
 }
