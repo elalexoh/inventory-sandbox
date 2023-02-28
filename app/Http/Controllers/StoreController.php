@@ -10,10 +10,10 @@ class StoreController extends Controller
     public function index()
     {
         try {
-            $store = Store::all();
+            $store = Store::with('Products')->get();
             $response = response()->json(array(
-                'status'    =>  'error',
-                'code'      =>   200,
+                'status'    =>  'success',
+                'code'      =>  200,
                 'data'      =>  $store
             ), 200);
         } catch (\Throwable $th) {
