@@ -13,12 +13,12 @@ class CreateStoresProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('stores_products', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('product_id')->constrained('products');
-            $table->foreignId('store_id')->constrained('stores');
-            $table->timestamps();
-        });
+        // Schema::create('stores_products', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->foreignId('product_id')->constrained('products');
+        //     $table->foreignId('store_id')->constrained('stores');
+        //     $table->timestamps();
+        // });
     }
 
     /**
