@@ -59,10 +59,12 @@ class ProductController extends Controller
 
   public function create(Request $request)
   {
+    // echo ($request);
     $params_array = array(
       'name'              => $request->name,
       'description'       => $request->description,
       'price'             => $request->price,
+      'store_id'          => $request->store_id,
     );
 
     $params = (object) $params_array;
@@ -73,6 +75,7 @@ class ProductController extends Controller
         'name'          => 'required',
         'description'   => 'required',
         'price'         => 'required|numeric',
+        'store_id'      => 'required|numeric',
       ]);
 
       if (!$validate->fails()) {
@@ -81,6 +84,7 @@ class ProductController extends Controller
         $product->name                  = $params->name;
         $product->description           = $params->description;
         $product->price                 = $params->price;
+        $product->store_id              = $params->store_id;
         $product->save();
 
         $data = response()->json(array(
@@ -94,7 +98,8 @@ class ProductController extends Controller
           'status'    => 'error',
           'code'      => 400,
           'message'   => 'Ha ocurrido un problema con la validación de los datos',
-          'errors'    => $validate->errors()
+          'errors'    => $validate->errors(),
+          'debug'     => $request,
         ), 404);
       }
     } else {
