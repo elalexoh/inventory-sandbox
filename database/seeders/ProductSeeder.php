@@ -16,19 +16,22 @@ class ProductSeeder extends Seeder
     public function run()
     {
         DB::table('products')->insert([
-            'name' => Str::random(10),
-            'description' => 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus labore natus reiciendis suscipit harum sint ut cumque nam minima officiis culpa nisi dicta perferendis qui illo, facere ducimus sapiente maxime!',
-            'price' => 50.00,
+            'name'          => Str::random(10),
+            'description'   => 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus labore natus reiciendis suscipit harum sint ut cumque nam minima officiis culpa nisi dicta perferendis qui illo, facere ducimus sapiente maxime!',
+            'price'         => 50.00,
+            'store_id'      => 1,
         ]);
         DB::table('products')->insert([
-            'name' => Str::random(10),
-            'description' => 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus labore natus reiciendis suscipit harum sint ut cumque nam minima officiis culpa nisi dicta perferendis qui illo, facere ducimus sapiente maxime!',
-            'price' => 25.00,
+            'name'          => Str::random(10),
+            'description'   => 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus labore natus reiciendis suscipit harum sint ut cumque nam minima officiis culpa nisi dicta perferendis qui illo, facere ducimus sapiente maxime!',
+            'price'         => 25.00,
+            'store_id'      => 1,
         ]);
         DB::table('products')->insert([
-            'name' => Str::random(10),
-            'description' => 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus labore natus reiciendis suscipit harum sint ut cumque nam minima officiis culpa nisi dicta perferendis qui illo, facere ducimus sapiente maxime!',
-            'price' => 45.00,
+            'name'          => Str::random(10),
+            'description'   => 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus labore natus reiciendis suscipit harum sint ut cumque nam minima officiis culpa nisi dicta perferendis qui illo, facere ducimus sapiente maxime!',
+            'price'         => 45.00,
+            'store_id'      => 1,
         ]);
     }
 }
